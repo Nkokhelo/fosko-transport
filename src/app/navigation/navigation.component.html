@@ -1,0 +1,41 @@
+<mat-toolbar color="primary" style="position: sticky; z-index: 3;" class="row">
+  <div class="col-11">
+    <h3>
+      Foskor Transport
+    </h3>
+  </div>
+  <a routerLink="/login" mat-flat-button color="primary" class="pull-right col-1" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </a>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false" style="position: fixed; padding-top: 15px;">
+    <mat-nav-list>
+      <a mat-button color="primary" routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon ou>dashboard</mat-icon> Dashboard
+      </a>
+      <a mat-button color="primary" routerLink="/transports" routerLinkActive="active">
+        <mat-icon matLine>my_location</mat-icon> Transports
+      </a>
+      <a mat-button color="primary" routerLink="/vehicles" routerLinkActive="active">
+        <mat-icon matLine>directions_car</mat-icon> Vehicles
+      </a>
+      <a mat-button color="primary" routerLink="/drivers" routerLinkActive="active">
+        <mat-icon matLine>person_pin</mat-icon> Drivers
+      </a>
+      <a mat-button color="primary" routerLink="/destinations" routerLinkActive="active">
+        <mat-icon matLine>departure_board</mat-icon> Destinations
+      </a>
+      <a mat-button color="primary" routerLink="/departments" routerLinkActive="active">
+        <mat-icon matLine>category</mat-icon> Departments
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

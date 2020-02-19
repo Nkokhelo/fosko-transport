@@ -1,0 +1,54 @@
+<div class="row">
+  <mat-progress-bar mode="indeterminate" [ngClass]="{'d-none': !isLoading}"></mat-progress-bar>
+</div>
+<div class="container-fluid pt-5 h-100">
+  <div class="col-12 mt-5 align-middle" style="align-items: center;">
+    <div class="row pt-5 justify-content-center">
+      <div
+           class="login-box col-lg-6 col-xl-5 col-md-7 col-sm-10 pt-0 pb-3 rounded bg-white align-middle d-inline mb-3">
+        <div class="row header pt-3 pb-3">
+          <div class="col-12">
+            <h4 class="text-center">FOSKOR TRANSPORT</h4>
+          </div>
+        </div>
+        <form class=" form-horizontal" method="POST" [formGroup]="loginForm" (ngSubmit)="onLogin()" class="pt-3">
+          <div class="row pt-2 pb-3">
+            <div class="text-danger col-12">
+              {{message}}
+            </div>
+          </div>
+          <div class="row pb-3">
+            <mat-form-field class="col-12">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" type="email" formControlName="email">
+              <mat-error *ngIf="hasError('email', 'required')">Name is required</mat-error>
+              <mat-error *ngIf="hasError('email', 'minlength')">Email must be more than 6 character long</mat-error>
+              <mat-error *ngIf="hasError('email', 'maxlength')">Email cannot be more that 50 character long
+              </mat-error>
+              <mat-error *ngIf="hasError('email', 'email')">Invalid email provided</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row pb-5">
+            <mat-form-field class="col-12" color="green">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput placeholder="Password" formControlName="password">
+              <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+              <mat-error *ngIf="hasError('email', 'minlength')">Password must be more than 6 character long
+              </mat-error>
+              <mat-error *ngIf="hasError('email', 'maxlength')">Password cannot be more that 50 character long
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="submit" mat-stroked-button color="primary" class="w-100 p-2"
+                      [disabled]="loginForm.invalid">
+                {{isLoading? "Please wait...":"Login"}}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

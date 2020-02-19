@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "Foskor",
+    "Sidenav",
+    "appspot",
+    "bisq",
+    "firebaseapp",
+    "firestore",
+    "jqvegh",
+    "minlenght",
+    "minlength",
+    "paginator"
+  ]
+  // "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

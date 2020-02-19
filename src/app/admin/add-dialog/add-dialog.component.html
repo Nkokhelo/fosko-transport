@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12">
+    <h1 mat-dialog-title>ADD {{data.title}}</h1>
+    <form class=" form-horizontal" method="POST" [formGroup]="addForm" (ngSubmit)="Add()">
+      <mat-dialog-content class="">
+        <div class="row">
+          <div class="text-danger col-12">
+            {{message}}
+          </div>
+        </div>
+        <div class="row pb-3">
+          <mat-form-field class="col-12">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="name" type="name" formControlName="name">
+            <mat-error *ngIf="hasError('name', 'required')">{{ data.title }} name is required</mat-error>
+            <mat-error *ngIf="hasError('name', 'minlength')">{{ data.title }} name must be more than 6 character long
+            </mat-error>
+            <mat-error *ngIf="hasError('name', 'maxlength')">{{ data.title }} name cannot be more that 50 character long
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-dialog-content>
+      <mat-dialog-actions class="col-12">
+        <button mat-flat-button color="primary" class="float-right ml-2">Save</button>
+        <button mat-button mat-dialog-close class="float-right">Close</button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+</div>

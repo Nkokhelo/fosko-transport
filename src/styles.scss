@@ -1,1 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/scss/bootstrap.scss';
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+.mat-drawer-container {
+  background-color: #f4f6f8;
+}
+
+.mat-input-element {
+  caret-color: #108c42;
+}
+::ng-deep .mat-form-field-underline,
+::ng-deep .mat-form-field-ripple {
+  background-color: #108c42 !important;
+}
+/** Overrides underline color **/
+.my-form-field.mat-form-field-appearance-legacy .mat-form-field-underline,
+.my-form-field.mat-form-field-appearance-legacy .mat-form-field-ripple,
+.my-form-field.mat-form-field-appearance-legacy.mat-focused
+  .mat-form-field-underline,
+.my-form-field.mat-form-field-appearance-legacy.mat-focused
+  .mat-form-field-ripple {
+  background-color: white;
+}
+
+/** Overrides label color **/
+.my-form-field.mat-form-field-appearance-legacy .mat-form-field-label,
+.my-form-field.mat-form-field-appearance-legacy.mat-focused
+  .mat-form-field-label {
+  color: white;
+}
+
+/** Overrides caret & text color **/
+.my-form-field.mat-form-field-appearance-legacy .mat-input-element {
+  caret-color: white;
+  color: white;
+}
+.small-header {
+  text-transform: uppercase;
+  color: #786e8e;
+  font-size: 11px;
+}
+
+.mat-table {
+  thead {
+    background-color: #fafafa;
+    button {
+      font-weight: 600;
+      font-size: 13px;
+      color: black;
+    }
+  }
+}
+
+.mat-dialog-container {
+  width: 800px;
+}
+
+.cdk-overlay-pane {
+  width: 30vw;
+}

@@ -1,0 +1,46 @@
+.sidenav-container {
+  height: 100%;
+}
+
+mat-toolbar {
+  a {
+    transition: all 0.3s;
+  }
+  a:hover {
+    text-decoration: none;
+    background-color: #ffffff18;
+  }
+}
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+mat-nav-list {
+  margin: 3%;
+  padding: 3%;
+  padding-top: 60px;
+  a {
+    width: 100%;
+    text-align: left;
+    padding: 3%;
+    padding-left: 10%;
+    color: #263238;
+  }
+  a.active {
+    color: #516bff;
+  }
+}
+
+.material-icons {
+  font-size: 20px;
+}
