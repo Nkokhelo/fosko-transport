@@ -32,6 +32,8 @@ export class ListDataSource extends DataSource<Listing> {
 
     return merge(...dataMutations).pipe(
       map(() => {
+        console.log(this.getSortedData([...this.data]));
+        console.log(this.getPagedData(this.getSortedData([...this.data])));
         return this.getPagedData(this.getSortedData([...this.data]));
       })
     );
