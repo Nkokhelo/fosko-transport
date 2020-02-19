@@ -3,13 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { TransportComponent } from './admin/transports/transport/transport.component';
-import { DestinationComponent } from './admin/destinations/destination/destination.component';
-import { VehicleAddComponent } from './admin/vehicles/vehicle-add/vehicle-add.component';
-import { DepartmentComponent } from './admin/departments/department/department.component';
-import { DriversComponent } from './admin/drivers/drivers/drivers.component';
-import { VehicleComponent } from './admin/vehicles/vehicle/vehicle.component';
+import { DestinationComponent } from './admin/destination/destination.component';
+import { DepartmentComponent } from './admin/department/department.component';
+import { VehicleComponent } from './admin/vehicle/vehicle.component';
 import { LoginComponent } from './login/login.component';
 import { AdminGuard } from './guards/admin.guard';
+import { DriversComponent } from './admin/driver/drivers.component';
 
 const routes: Routes = [
   {

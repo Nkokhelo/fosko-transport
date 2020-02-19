@@ -1,13 +1,13 @@
-<mat-toolbar color="primary" style="position: sticky; z-index: 3;" class="row">
-  <div class="col-11">
-    <h3>
+<mat-toolbar color="primary" style="position: sticky; z-index: 3;" class="row m-0">
+  <div class="col-12">
+    <h3 class="d-inline">
       Foskor Transport
     </h3>
+    <a routerLink="/login" mat-flat-button color="primary" class="float-right" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </a>
   </div>
-  <a routerLink="/login" mat-flat-button color="primary" class="pull-right col-1" (click)="logout()">
-    <mat-icon>logout</mat-icon>
-    Logout
-  </a>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport

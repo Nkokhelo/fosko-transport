@@ -9,39 +9,6 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
-.mat-drawer-container {
-  background-color: #f4f6f8;
-}
-
-.mat-input-element {
-  caret-color: #108c42;
-}
-::ng-deep .mat-form-field-underline,
-::ng-deep .mat-form-field-ripple {
-  background-color: #108c42 !important;
-}
-/** Overrides underline color **/
-.my-form-field.mat-form-field-appearance-legacy .mat-form-field-underline,
-.my-form-field.mat-form-field-appearance-legacy .mat-form-field-ripple,
-.my-form-field.mat-form-field-appearance-legacy.mat-focused
-  .mat-form-field-underline,
-.my-form-field.mat-form-field-appearance-legacy.mat-focused
-  .mat-form-field-ripple {
-  background-color: white;
-}
-
-/** Overrides label color **/
-.my-form-field.mat-form-field-appearance-legacy .mat-form-field-label,
-.my-form-field.mat-form-field-appearance-legacy.mat-focused
-  .mat-form-field-label {
-  color: white;
-}
-
-/** Overrides caret & text color **/
-.my-form-field.mat-form-field-appearance-legacy .mat-input-element {
-  caret-color: white;
-  color: white;
-}
 .small-header {
   text-transform: uppercase;
   color: #786e8e;
@@ -60,9 +27,11 @@ body {
 }
 
 .mat-dialog-container {
-  width: 800px;
+  // width: 30vw;
+  min-width: 30vw;
 }
 
-.cdk-overlay-pane {
+.mat-dialog-container.transport {
   width: 30vw;
+  min-width: 60vw;
 }

@@ -21,10 +21,10 @@ export class DbcontextService {
       .collection<T>(collectionName)
       .add({ ...object })
       .then(d => {
-        this.snackBar.open(`Saved!!!`);
+        this.snackBar.open(`Saved!!!`, 'DISMISS');
       })
       .catch(e => {
-        this.snackBar.open(e);
+        this.snackBar.open(e, 'DISMISS');
       });
   }
 

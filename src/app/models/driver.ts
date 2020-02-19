@@ -1,8 +1,10 @@
-export class Driver {
+import { Listing } from '../intefaces/listing';
+
+export class Driver implements Listing {
   constructor(
     public readonly id: string = '',
     public name: string = '',
-    public registrationDate: Date = new Date(),
+    public createdAt: Date = new Date(),
     public transports: string[] = [],
     public totalTransports = 0
   ) {}

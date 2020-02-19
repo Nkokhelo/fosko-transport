@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<mat-progress-bar mode="indeterminate" *ngIf="!vehicles"></mat-progress-bar>
+<div class="container-fluid" *ngIf="vehicles">
   <div class="row  pl-3">
     <div class="col-12 pt-4 pb-3">
       <div class="row">
@@ -13,7 +14,7 @@
       </div>
     </div>
     <div class="col-12 mb-5">
-      <app-vehicles-list></app-vehicles-list>
+      <app-list *ngIf="vehicles" [dataInput]="vehicles" [displayColumnsInput]="displayedColumns"></app-list>
     </div>
   </div>
 </div>

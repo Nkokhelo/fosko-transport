@@ -1,0 +1,22 @@
+<mat-progress-bar mode="indeterminate" *ngIf="!destinations"></mat-progress-bar>
+<div class="container-fluid" *ngIf="destinations">
+  <div class="row  pl-3">
+    <div class="col-12 pt-4 pb-3">
+      <div class="row">
+        <div class="col-7">
+          <p class="small-header">DESTINATIONS</p>
+          <h4>All destinations</h4>
+        </div>
+        <div class="col-5 align-bottom">
+          <button mat-flat-button color="primary" class="float-right align-bottom" (click)="openDialog()">
+            Add destination</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-5">
+      <app-list *ngIf="destinations && displayedColumns" [dataInput]="destinations"
+                [displayColumnsInput]="displayedColumns">
+      </app-list>
+    </div>
+  </div>
+</div>
