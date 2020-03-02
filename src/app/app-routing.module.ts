@@ -9,6 +9,8 @@ import { VehicleComponent } from './admin/vehicle/vehicle.component';
 import { LoginComponent } from './login/login.component';
 import { AdminGuard } from './guards/admin.guard';
 import { DriversComponent } from './admin/driver/drivers.component';
+import { TransportListComponent } from './admin/transports/transport-list/transport-list.component';
+import { AddTransportComponent } from './admin/transports/add-transport/add-transport.component';
 
 const routes: Routes = [
   {
@@ -39,7 +41,24 @@ const routes: Routes = [
       },
       {
         path: 'transports',
-        component: TransportComponent
+        component: TransportComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'list'
+          },
+          {
+            path: 'list',
+            // outlet: 'transports',
+            component: TransportListComponent
+          },
+          {
+            path: 'add',
+            // outlet: 'transports',
+            component: AddTransportComponent
+          }
+        ]
       },
       {
         path: 'vehicles',

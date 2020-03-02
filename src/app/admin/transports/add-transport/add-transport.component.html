@@ -1,0 +1,195 @@
+<mat-progress-bar mode="indeterminate" *ngIf="!isLoaded"></mat-progress-bar>
+
+<div class="container-fluid" *ngIf="isLoaded">
+  <div class="row  pl-3">
+    <div class="col-12 pt-4 pb-3">
+      <div class="row">
+        <div class="col-7">
+          <p class="small-header">TRANSPORTS</p>
+          <h4>All Transports</h4>
+        </div>
+        <div class="col-5 align-bottom">
+          <a mat-flat-button color="primary" class="float-right align-bottom" routerLink='/transports/list'>
+            All transport
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-5">
+      <div class="mat-elevation-z1">
+        <form [formGroup]="transportForm" novalidate (ngSubmit)="onSubmit()">
+          <mat-card class="transport-card">
+            <mat-card-header class="p-0 m-0">
+              <mat-card-title class="p-0 m-0">Transport Information</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="m-3">
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-select placeholder="Vehicle" formControlName="vehicle">
+                      <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle.id">
+                        {{ vehicle.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="transportForm.controls['vehicle'].hasError('required')">
+                      Vehicle is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-select placeholder="Driver" formControlName="driver">
+                      <mat-option *ngFor="let driver of drivers" [value]="driver.id">
+                        {{ driver.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="transportForm.controls['driver'].hasError('required')">
+                      Driver is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Company No" formControlName="companyNo">
+                    <mat-error *ngIf="transportForm.controls['companyNo'].hasError('required')">
+                      Company No is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-select placeholder="Reason for transport" formControlName="reason">
+                      <mat-option *ngFor="let reason of reasons" [value]="reason.id">
+                        {{ reason.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="transportForm.controls['reason'].hasError('required')">
+                      State is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-select placeholder="Department" formControlName="department">
+                      <mat-option *ngFor="let department of departments" [value]="department.id">
+                        {{ department.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="transportForm.controls['department'].hasError('required')">
+                      Vehicle is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <mat-select placeholder="Destination" formControlName="destination">
+                      <mat-option *ngFor="let destination of destinations" [value]="destination.id">
+                        {{ destination.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="transportForm.controls['destination'].hasError('required')">
+                      Driver is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row ml-1 mt-4">
+                <h5>{{timeDisplay}}</h5>
+                <mat-error *ngIf="invalidSelection" class="col-12 ml-0 pl-0 mb-2">
+                  Time out must be earlier than time in
+                </mat-error>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Time Out" formControlName="timeOut"
+                           [owlDateTimeTrigger]="tOut" [owlDateTime]="tOut" [max]="max"
+                           (dateTimeChange)="calcTimeOut($event)">
+                    <owl-date-time #tOut></owl-date-time>
+
+                    <mat-error *ngIf="transportForm.controls['timeOut'].hasError('required')">
+                      Time out is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Time In" formControlName="timeIn"
+                           [owlDateTimeTrigger]="tIn" [owlDateTime]="tIn" [min]="min"
+                           (dateTimeChange)="calcTimeIn($event)">
+                    <owl-date-time #tIn></owl-date-time>
+
+                    <mat-error *ngIf="transportForm.controls['timeIn'].hasError('required')">
+                      Time In is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+              </div>
+              <div class="row ml-1 mt-4">
+                <h5>{{totalKilometers}} Kilometers</h5>
+                <mat-error *ngIf="totalKilometers < 0" class="col-12 ml-0 pl-0 mb-2">
+                  Km In cannot be less than KM Out
+                </mat-error>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput
+                           type="number"
+                           placeholder="KM Out"
+                           formControlName="kmOut">
+
+                    <mat-error *ngIf="transportForm.controls['kmOut'].hasError('required')">
+                      KM ou is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <input matInput type="number" placeholder="KM In" formControlName="kmIn"
+                           (keyup)="calcKilometers($event)">
+                    <mat-error *ngIf="transportForm.controls['kmIn'].hasError('required')">
+                      KM In is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="transportForm.value.kmIn <= transportForm.value.kmOut">
+                      KM In cannot be grater than km out
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+              </div>
+              <div class="row ml-1 mt-4">
+                <h5>{{passengers.length}} Passenger(s)</h5>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field class="full-width">
+                    <textarea matInput #postalCode placeholder="John Doe, Kevin Hart, Will Smith"
+                              formControlName="passengersList" (keyup)="countPassengers($event)"></textarea>
+                    <mat-hint align="end">Please use a comma(,) to separate your passengers</mat-hint>
+                  </mat-form-field>
+                </div>
+              </div>
+
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" class="m-3" type="submit">Submit</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

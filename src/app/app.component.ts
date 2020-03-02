@@ -12,6 +12,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public onlineEvent: Observable<Event>;
   public offlineEvent: Observable<Event>;
+  public loadingEvent: Observable<Event>;
   public subscriptions: Subscription[] = [];
 
   public connectionStatusMessage: string;
@@ -20,31 +21,31 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(public snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.onlineEvent = fromEvent(window, 'online');
-    this.offlineEvent = fromEvent(window, 'offline');
-    this.offlineEvent = fromEvent(window, 'loading');
+    this.onlineEvent = fromEvent(window, `online`);
+    this.offlineEvent = fromEvent(window, `offline`);
+    this.loadingEvent = fromEvent(window, `loading`);
 
     this.subscriptions.push(
       this.onlineEvent.subscribe(e => {
-        this.connectionStatus = 'Connected to the internet! You are online';
-        this.snackBar.open(
-          'Connected to the internet! You are online',
-          'DISMISS'
-        );
-        console.log('online');
-        this.connectionStatus = 'online';
+        this.snackBarPopper(`Connected to the internet! You are online`);
       })
     );
+
     this.subscriptions.push(
-      this.onlineEvent.subscribe(e => {
-        this.connectionStatus = 'Connection lost, your are offline';
-        this.snackBar.open(
-          'Connected to the internet! You are online',
-          'DISMISS'
-        );
-        this.connectionStatus = 'online';
+      this.offlineEvent.subscribe(e => {
+        this.snackBarPopper(`Connected to the internet! You are online`);
       })
     );
+
+    this.subscriptions.push(
+      this.loadingEvent.subscribe(e => {
+        this.snackBarPopper(`Please wait...`);
+      })
+    );
+  }
+
+  snackBarPopper(message: string) {
+    this.snackBar.open(message, 'DISMISS');
   }
 
   ngOnDestroy(): void {

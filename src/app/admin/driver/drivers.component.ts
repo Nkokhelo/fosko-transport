@@ -1,16 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Driver } from 'src/app/models/driver';
 import { DbcontextService } from 'src/app/services/dbcontext.service';
 import { Subscription } from 'rxjs';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-drivers',
   templateUrl: './drivers.component.html',
   styleUrls: ['./drivers.component.scss']
 })
-export class DriversComponent implements OnInit {
+export class DriversComponent implements OnInit, OnDestroy {
   driver: Driver;
   collectionName = 'drivers';
   // set up display columns for this component
@@ -22,14 +23,15 @@ export class DriversComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public contextService: DbcontextService,
-    public changeDetector: ChangeDetectorRef
+    public changeDetector: ChangeDetectorRef,
+    public router: Router
   ) {}
 
   ngOnInit() {
     this.subscription = this.contextService
       .all<Driver>(this.collectionName)
       .subscribe(d => {
-        this.drivers = d;
+        if (d.length > 0) this.drivers = d;
       });
   }
 

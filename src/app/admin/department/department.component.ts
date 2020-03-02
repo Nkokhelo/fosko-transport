@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Department } from 'src/app/models/department';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DbcontextService } from 'src/app/services/dbcontext.service';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
+import { FirebaseError } from 'firebase';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-department',
@@ -19,7 +21,8 @@ export class DepartmentComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    public contextService: DbcontextService
+    public contextService: DbcontextService,
+    public snackBar: MatSnackBar
   ) {
     this.contextService.all<Department>(this.collectionName).subscribe(d => {
       this.departments = d;

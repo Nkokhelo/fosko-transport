@@ -38,7 +38,34 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ListComponent } from './admin/list/list.component';
 import { DestinationComponent } from './admin/destination/destination.component';
 import { DriversComponent } from './admin/driver/drivers.component';
+import { AddTransportComponent } from './admin/transports/add-transport/add-transport.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { TransportListComponent } from './admin/transports/transport-list/transport-list.component';
+import { TransportsComponent } from './admin/transport-reference/transports/transports.component';
+import {
+  OwlDateTimeModule,
+  OWL_DATE_TIME_FORMATS,
+  DateTimeAdapter,
+  OWL_DATE_TIME_LOCALE
+} from 'ng-pick-datetime';
 
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+
+import {
+  OwlMomentDateTimeModule,
+  MomentDateTimeAdapter
+} from 'ng-pick-datetime-moment';
+
+export const MY_MOMENT_FORMATS = {
+  parseInput: 'l LT',
+  fullPickerInput: 'l LT',
+  datePickerInput: 'l',
+  timePickerInput: 'LT',
+  monthYearLabel: 'dd MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'dd MMMM YYYY'
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +78,10 @@ import { DriversComponent } from './admin/driver/drivers.component';
     AddDialogComponent,
     DestinationComponent,
     DriversComponent,
-    ListComponent
+    ListComponent,
+    TransportListComponent,
+    AddTransportComponent,
+    TransportsComponent
   ],
   imports: [
     BrowserModule,
@@ -80,10 +110,25 @@ import { DriversComponent } from './admin/driver/drivers.component';
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     MatProgressSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatRadioModule,
+    OwlDateTimeModule,
+    // OwlMomentDateTimeModule,
+    Ng2FlatpickrModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: DateTimeAdapter,
+      useClass: MomentDateTimeAdapter,
+      deps: [OWL_DATE_TIME_LOCALE]
+    },
+    {
+      provide: OWL_DATE_TIME_FORMATS,
+      useValue: MY_MOMENT_FORMATS
+    }
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [AddDialogComponent]
+  entryComponents: [AddDialogComponent, AddTransportComponent]
 })
 export class AppModule {}

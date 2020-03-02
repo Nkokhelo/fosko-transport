@@ -1,10 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  OnDestroy,
+  ViewChild
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AddDialogComponent } from '../add-dialog/add-dialog.component';
 import { Vehicle } from 'src/app/models/vehicle';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { DbcontextService } from 'src/app/services/dbcontext.service';
 import { Subscription } from 'rxjs';
+import { ListComponent } from '../list/list.component';
 
 @Component({
   selector: 'app-vehicle',
@@ -14,23 +21,21 @@ import { Subscription } from 'rxjs';
 export class VehicleComponent implements OnInit, OnDestroy {
   vehicle: Vehicle;
   collectionName = 'vehicles';
-  // set up display columns for this component
-  displayedColumns = ['name', 'totalTransports', 'createdAt'];
+  displayedColumns: string[] = ['name', 'totalTransports', 'createdAt'];
   subscription: Subscription;
 
   vehicles: Vehicle[];
 
   constructor(
     public dialog: MatDialog,
-    public contextService: DbcontextService,
-    public changeDetector: ChangeDetectorRef
+    public contextService: DbcontextService
   ) {}
 
   ngOnInit() {
     this.subscription = this.contextService
       .all<Vehicle>(this.collectionName)
       .subscribe(d => {
-        this.vehicles = d;
+        if (d.length > 0) this.vehicles = d;
       });
   }
 

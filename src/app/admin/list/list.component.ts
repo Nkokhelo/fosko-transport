@@ -4,8 +4,6 @@ import {
   OnInit,
   ViewChild,
   Input,
-  ChangeDetectorRef,
-  AfterContentChecked,
   AfterViewChecked,
   OnChanges
 } from '@angular/core';
@@ -20,36 +18,26 @@ import { Listing } from 'src/app/intefaces/listing';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent
-  implements AfterViewInit, AfterViewChecked, OnInit, OnChanges {
+export class ListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatTable, { static: false }) table: MatTable<Listing>;
   @Input() displayColumnsInput: string[];
   @Input() dataInput: Listing[];
   displayedColumns: string[];
-
   dataSource: ListDataSource;
 
-  constructor(private changeDetector: ChangeDetectorRef) {
-    // this.dataSource = new ListDataSource(this.dataInput);
-  } /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  constructor() {} /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dataSource = new ListDataSource();
+    this.dataSource.data = this.dataInput;
+    this.displayedColumns = this.displayColumnsInput;
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
-  }
-
-  ngAfterViewChecked() {
-    this.changeDetector.detectChanges();
-  }
-  ngOnChanges(): void {
-    this.dataSource = new ListDataSource(this.dataInput);
-    this.displayedColumns = this.displayColumnsInput;
-    // this.dataSource = new ListDataSource(this.dataInput);
-    this.changeDetector.detectChanges();
   }
 }

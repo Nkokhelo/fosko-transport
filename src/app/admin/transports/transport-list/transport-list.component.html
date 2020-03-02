@@ -1,25 +1,69 @@
-<div class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
+<mat-progress-bar mode="indeterminate" *ngIf="!transports"></mat-progress-bar>
+<div class="container-fluid" *ngIf="transports">
+  <div class="row  pl-3">
+    <div class="col-12 pt-4 pb-3">
+      <div class="row">
+        <div class="col-7">
+          <p class="small-header">TRANSPORTS</p>
+          <h4>All Transports</h4>
+        </div>
+        <div class="col-5 align-bottom">
+          <a mat-flat-button color="primary" class="float-right align-bottom" routerLink='/transports/add'>
+            Add transport
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mb-5">
+      <div class="mat-elevation-z1">
+        <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="transports">
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row">{{row.name}}</td>
-    </ng-container>
+          <!-- vehicle -->
+          <ng-container matColumnDef="vehicle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Vehicle</th>
+            <td mat-cell *matCellDef="let row">{{row.vehicle}}</td>
+          </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+          <!-- transportationDate -->
+          <ng-container matColumnDef="transportationDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+            <td mat-cell *matCellDef="let row">{{row.transportationDate}}</td>
+          </ng-container>
 
-  <mat-paginator #paginator
-      [length]="dataSource?.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
+          <!-- timeOut -->
+          <ng-container matColumnDef="timeOut">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time Out</th>
+            <td mat-cell *matCellDef="let row">{{row.timeOut}}</td>
+          </ng-container>
+
+          <!-- timeIn -->
+          <ng-container matColumnDef="timeIn">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time In</th>
+            <td mat-cell *matCellDef="let row">{{row.timeIn}}</td>
+          </ng-container>
+
+          <!-- totalPassengers -->
+          <ng-container matColumnDef="totalPassengers">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Passengers</th>
+            <td mat-cell *matCellDef="let row">{{row.totalPassengers}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalKm">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Km</th>
+            <td mat-cell *matCellDef="let row">{{row.totalKm}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator #paginator
+                       [length]="dataSource?.data.length"
+                       [pageIndex]="0"
+                       [pageSize]="50"
+                       [pageSizeOptions]="[25, 50, 100, 250]">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
 </div>
