@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import {
+  Validators,
+  FormGroup,
+  FormControl,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms';
 import { Vehicle } from 'src/app/models/vehicle';
 import { Department } from 'src/app/models/department';
 import { Reason } from 'src/app/models/reason';
@@ -51,14 +57,14 @@ export class AddTransportComponent implements OnInit {
       reason: new FormControl('', Validators.required),
       destination: new FormControl('', Validators.required),
       department: new FormControl('', Validators.required),
-      timeIn: new FormControl('', Validators.required),
-      timeOut: new FormControl('', Validators.required),
+      timeIn: new FormControl('', [Validators.required, this.isValidTime]),
+      timeOut: new FormControl('', [Validators.required, this.isValidTime]),
       kmOut: new FormControl('', Validators.required),
       kmIn: new FormControl('', Validators.required),
       passengersList: new FormControl('', Validators.required)
-    }, {
-      Validators:
     });
+
+    this.transportForm.setValidators(this.checkKm);
   }
 
   ngOnInit() {
@@ -157,8 +163,15 @@ export class AddTransportComponent implements OnInit {
     const kmIn = group.controls.kmIn;
     const kmOut = group.controls.kmOut;
     if (kmIn.value < kmOut.value) {
-      kmIn.setErrors({graterValue: true });
+      kmIn.setErrors({ graterValue: true });
+    } else {
+      kmIn.setErrors(null);
     }
+    return null;
+  }
+
+  isValidTime(control: AbstractControl): ValidationErrors {
+    console.log(control.value);
     return null;
   }
 }
