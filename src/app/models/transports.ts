@@ -1,7 +1,7 @@
 export class Transport {
   constructor(
     public id?: string,
-    public transportationDate?: Date,
+    public transportationMonth: string = '',
     public passengers?: Passenger[],
     public totalPassengers: number = 0,
     public companyNo: string = '',

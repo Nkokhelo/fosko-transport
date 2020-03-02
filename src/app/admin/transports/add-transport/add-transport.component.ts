@@ -20,6 +20,11 @@ import { MatSnackBar } from '@angular/material';
 import { firestore } from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TransportService } from 'src/app/services/transport.service';
+import { isObject } from 'util';
+import { MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
+import { emptyScheduled } from 'rxjs/internal/observable/empty';
+import { strictEqual } from 'assert';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-transport',
@@ -37,6 +42,7 @@ export class AddTransportComponent implements OnInit {
   totalKilometers = 0;
   totalTime = 0;
   isLoaded = false;
+  isSaving = false;
   min: Date;
   max: Date;
   timeDisplay = 'Time';
@@ -48,7 +54,8 @@ export class AddTransportComponent implements OnInit {
   constructor(
     public db: DbcontextService,
     private snackBar: MatSnackBar,
-    public transportService: TransportService
+    public transportService: TransportService,
+    public router: Router
   ) {
     this.transportForm = new FormGroup({
       vehicle: new FormControl('', Validators.required),
@@ -57,8 +64,8 @@ export class AddTransportComponent implements OnInit {
       reason: new FormControl('', Validators.required),
       destination: new FormControl('', Validators.required),
       department: new FormControl('', Validators.required),
-      timeIn: new FormControl('', [Validators.required, this.isValidTime]),
-      timeOut: new FormControl('', [Validators.required, this.isValidTime]),
+      timeIn: new FormControl('', [Validators.required]),
+      timeOut: new FormControl('', [Validators.required]),
       kmOut: new FormControl('', Validators.required),
       kmIn: new FormControl('', Validators.required),
       passengersList: new FormControl('', Validators.required)
@@ -95,9 +102,17 @@ export class AddTransportComponent implements OnInit {
   }
 
   updateDisplayTime() {
-    return this.transport.totalTime > 1
-      ? `${this.transport.totalTime} Hour(s)`
-      : `${this.transport.totalTime * 60} Minutes`;
+    const time = this.transport.totalTime;
+    let displayTime = '';
+    if (!Number.isInteger(time)) {
+      const hours = Number(`${time}`.split('.')[0]);
+      const hoursDecimal = Number(`.${`${time}`.split('.')[1]}`);
+      displayTime = `${hours > 0 ? hours + ' hour(s)' : ''} ${hoursDecimal *
+        60} minute(s)`;
+    } else {
+      displayTime = `${time} hour(s)`;
+    }
+    return displayTime;
   }
 
   calcTotalTime() {
@@ -118,10 +133,8 @@ export class AddTransportComponent implements OnInit {
       this.destinations = await this.db.list<Destination>('destinations');
       this.drivers = await this.db.list<Driver>('drivers');
       this.reasons = await this.db.list<Reason>('reasons');
-      console.log('done');
     } catch (e) {
       this.snackBar.open(`${e.message}`);
-      console.log(e);
     }
 
     // this.isLoaded = this.isAllLoaded();
@@ -138,23 +151,21 @@ export class AddTransportComponent implements OnInit {
   }
 
   async onSubmit() {
-    console.log('submit');
     if (this.transportForm.valid) {
-      console.log('valid');
+      this.isSaving = true;
       this.transport = { ...this.transportForm.value };
       this.transport.timeIn = this.timeIn.toDate();
       this.transport.timeOut = this.timeOut.toDate();
       this.transport.totalTime = this.timeIn.diff(this.timeOut, 'hours', true);
       this.transport.totalKm = this.totalKilometers;
       this.transport.totalPassengers = this.passengers.length;
+      this.transport.transportationMonth = this.timeOut.format('MMMM YYYY');
       try {
-        console.log('submit try');
         const d = await this.transportService.addTransport(this.transport);
-        console.log(d);
+        this.router.navigate(['/transports/list']);
       } catch (e) {
-        console.log('submit catch');
+        this.isSaving = false;
         this.snackBar.open(`Error while updating object: ${e}`, 'DISMISS');
-        console.log(e);
       }
     }
   }
@@ -167,11 +178,6 @@ export class AddTransportComponent implements OnInit {
     } else {
       kmIn.setErrors(null);
     }
-    return null;
-  }
-
-  isValidTime(control: AbstractControl): ValidationErrors {
-    console.log(control.value);
     return null;
   }
 }

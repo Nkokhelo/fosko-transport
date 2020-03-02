@@ -102,7 +102,7 @@
                 </div>
               </div>
 
-              <div class="row ml-1 mt-4">
+              <div class="row ml-0 mt-4">
                 <h5>{{timeDisplay}}</h5>
                 <mat-error *ngIf="invalidSelection" class="col-12 ml-0 pl-0 mb-2">
                   Time out must be earlier than time in
@@ -111,11 +111,14 @@
               <div class="row">
                 <div class="col">
                   <mat-form-field class="full-width">
-                    <input matInput placeholder="Time Out" formControlName="timeOut"
+                    <input [readonly]="true" matInput placeholder="Time Out" formControlName="timeOut"
                            [owlDateTimeTrigger]="tOut" [owlDateTime]="tOut" [max]="max"
                            (dateTimeChange)="calcTimeOut($event)">
                     <owl-date-time #tOut></owl-date-time>
 
+                    <mat-error *ngIf="transportForm.hasError('invalidTimeOut')">
+                      Time Out is <strong>invalid</strong>
+                    </mat-error>
                     <mat-error *ngIf="transportForm.controls['timeOut'].hasError('required')">
                       Time out is <strong>required</strong>
                     </mat-error>
@@ -124,7 +127,7 @@
 
                 <div class="col">
                   <mat-form-field class="full-width">
-                    <input matInput placeholder="Time In" formControlName="timeIn"
+                    <input [readonly]="true" matInput placeholder="Time In" formControlName="timeIn"
                            [owlDateTimeTrigger]="tIn" [owlDateTime]="tIn" [min]="min"
                            (dateTimeChange)="calcTimeIn($event)">
                     <owl-date-time #tIn></owl-date-time>
@@ -132,11 +135,14 @@
                     <mat-error *ngIf="transportForm.controls['timeIn'].hasError('required')">
                       Time In is <strong>required</strong>
                     </mat-error>
+                    <mat-error *ngIf="transportForm.hasError('invalidTimeIn')">
+                      Time In is <strong>invalid</strong>
+                    </mat-error>
                   </mat-form-field>
                 </div>
 
               </div>
-              <div class="row ml-1 mt-4">
+              <div class="row ml-0 mt-4">
                 <h5>{{totalKilometers}} Kilometers</h5>
                 <mat-error *ngIf="totalKilometers < 0" class="col-12 ml-0 pl-0 mb-2">
                   Km In cannot be less than KM Out
@@ -164,13 +170,13 @@
                       KM In is <strong>required</strong>
                     </mat-error>
                     <mat-error *ngIf="transportForm.value.kmIn <= transportForm.value.kmOut">
-                      KM In cannot be grater than km out
+                      KM In cannot be smaller than than km out
                     </mat-error>
                   </mat-form-field>
                 </div>
 
               </div>
-              <div class="row ml-1 mt-4">
+              <div class="row ml-0 mt-4">
                 <h5>{{passengers.length}} Passenger(s)</h5>
               </div>
               <div class="row">
@@ -185,7 +191,8 @@
 
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button color="primary" class="m-3" type="submit">Submit</button>
+              <button mat-raised-button color="primary" class="m-3" type="submit"
+                      [disabled]="isSaving">{{ !isSaving ? 'Add Transport': 'Saving...'}}</button>
             </mat-card-actions>
           </mat-card>
         </form>

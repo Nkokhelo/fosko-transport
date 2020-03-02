@@ -15,6 +15,11 @@ import { DbcontextService } from 'src/app/services/dbcontext.service';
 import { MatSnackBar } from '@angular/material';
 import { Vehicle } from 'src/app/models/vehicle';
 import { Listing } from 'src/app/intefaces/listing';
+import { async } from '@angular/core/testing';
+import { firestore } from 'firebase';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/internal/operators/map';
+import { tap } from 'rxjs/internal/operators/tap';
 
 @Component({
   selector: 'app-transport-list',
@@ -35,15 +40,17 @@ export class TransportListComponent implements AfterViewInit, OnInit {
   dataSource: TransportListDataSource;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns: string[] = [
-    'vehicle',
-    'transportationDate',
+    'destination',
     'timeOut',
     'timeIn',
     'totalPassengers',
-    'totalKm'
+    'totalKm',
+    'driver',
+    'vehicle'
   ];
   constructor(
     public contextService: DbcontextService,
+    public db: AngularFirestore,
     public snackBar: MatSnackBar
   ) {}
 
@@ -51,9 +58,12 @@ export class TransportListComponent implements AfterViewInit, OnInit {
     this.subscription = this.contextService
       .all<Transport>(this.collectionName)
       .subscribe(
-        d => {
-          this.dataSource.data = d;
-          this.transports = d;
+        async d => {
+          console.log('subscribe');
+          const transportData = await this.makeTransportTable(d);
+          console.log('await finished');
+          this.dataSource.data = transportData;
+          this.transports = transportData;
         },
         error => {
           this.snackBar.open(error, 'DISMISS', { duration: 5000 });
@@ -68,10 +78,51 @@ export class TransportListComponent implements AfterViewInit, OnInit {
   }
 
   async getName(id, collection) {
-    const obj: Listing = await this.contextService
-      .get<Listing>(id, 'vehicles')
-      .valueChanges()
-      .toPromise();
-    return obj.name;
+    try {
+      const list = await this.contextService.list<Listing>(collection);
+      return list.filter(d => d.id === id)[0].name;
+    } catch (e) {
+      console.log(e);
+      this.snackBar.open('Error : ' + e, 'DISMISS');
+    }
+  }
+
+  async makeTransportTable(d: Transport[]) {
+    console.log('make Transport table');
+    try {
+      return await Promise.all(
+        d.map(async t => {
+          console.log('promise ma asnyc');
+          const vehicleName = await this.getName(t.vehicle, 'vehicles');
+          const driverName = await this.getName(t.driver, 'drivers');
+          const destinationName = await this.getName(
+            t.destination,
+            'destinations'
+          );
+          console.log('getname done');
+          const transport: Transport = new Transport(
+            '',
+            '',
+            t.passengers,
+            t.totalPassengers,
+            '',
+            '',
+            destinationName,
+            '',
+            driverName,
+            vehicleName,
+            t.timeOut,
+            t.timeIn,
+            0,
+            0,
+            0,
+            t.totalKm
+          );
+          return transport;
+        })
+      );
+    } catch (e) {
+      this.snackBar.open(e);
+    }
   }
 }

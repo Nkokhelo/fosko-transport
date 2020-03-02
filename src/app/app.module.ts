@@ -43,6 +43,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { TransportListComponent } from './admin/transports/transport-list/transport-list.component';
 import { TransportsComponent } from './admin/transport-reference/transports/transports.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {
   OwlDateTimeModule,
   OWL_DATE_TIME_FORMATS,
@@ -56,6 +57,7 @@ import {
   OwlMomentDateTimeModule,
   MomentDateTimeAdapter
 } from 'ng-pick-datetime-moment';
+import { VehicleCardComponent } from './admin/graphs/vehicle-card/vehicle-card.component';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'l LT',
@@ -81,7 +83,8 @@ export const MY_MOMENT_FORMATS = {
     ListComponent,
     TransportListComponent,
     AddTransportComponent,
-    TransportsComponent
+    TransportsComponent,
+    VehicleCardComponent
   ],
   imports: [
     BrowserModule,
@@ -115,6 +118,7 @@ export const MY_MOMENT_FORMATS = {
     MatRadioModule,
     OwlDateTimeModule,
     // OwlMomentDateTimeModule,
+    NgxChartsModule,
     Ng2FlatpickrModule
   ],
   providers: [

@@ -16,7 +16,11 @@ export class DbcontextService {
   ) {}
 
   get<T>(id: string, collectionName: string) {
-    return this.db.collection(`${collectionName}`).doc<T>(`${id}`);
+    console.log('get', id, collectionName);
+    return this.db
+      .collection(`${collectionName}`)
+      .doc<T>(`${id}`)
+      .valueChanges();
   }
 
   save<T>(object: T, collectionName: string) {
