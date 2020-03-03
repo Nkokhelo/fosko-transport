@@ -27,11 +27,11 @@ export class DashboardComponent implements OnInit {
   departments: any[];
   colourValues = {
     domain: [
-      '#5E988F',
-      '#C34458',
+      '#4850bd',
+      '#ffb43c',
       '#6B8795',
-      '#1C2539',
-      '#78B5B5',
+      '#d5ff3c',
+      '#ff3cd8',
       '#E3E7D4',
       '#6895BE',
       '#E3E7D4',
