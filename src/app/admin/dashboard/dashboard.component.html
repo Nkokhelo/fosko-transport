@@ -1,17 +1,35 @@
 <div class="grid-container">
-  <mat-grid-list cols="2" rowHeight="550px">
+  <mat-grid-list cols="2" rowHeight="550px" *ngIf="vehicles">
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card">
         <mat-card-header>
           <mat-card-title>
             Vehicles
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <ngx-charts-bar-vertical
+                                   [view]="[700,400]"
+                                   [scheme]="colourValues"
+                                   [results]="vehicles"
+                                   [gradient]="false"
+                                   [xAxis]="true"
+                                   [yAxis]="true"
+                                   [legend]="true"
+                                   [showXAxisLabel]="true"
+                                   [showYAxisLabel]="true"
+                                   [xAxisLabel]="true"
+                                   [yAxisLabel]="true">
+          </ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            Drivers
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
@@ -28,6 +46,74 @@
                                    [xAxisLabel]="true"
                                    [yAxisLabel]="true">
           </ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            Destinations
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <ngx-charts-bar-vertical
+                                   [view]="[700,400]"
+                                   [scheme]="colourValues"
+                                   [results]="destinations"
+                                   [gradient]="false"
+                                   [xAxis]="true"
+                                   [yAxis]="true"
+                                   [legend]="true"
+                                   [showXAxisLabel]="true"
+                                   [showYAxisLabel]="true"
+                                   [xAxisLabel]="true"
+                                   [yAxisLabel]="true">
+          </ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            Departments
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <ngx-charts-bar-vertical
+                                   [view]="[700,400]"
+                                   [scheme]="colourValues"
+                                   [results]="departments"
+                                   [gradient]="false"
+                                   [xAxis]="true"
+                                   [yAxis]="true"
+                                   [legend]="true"
+                                   [showXAxisLabel]="true"
+                                   [showYAxisLabel]="true"
+                                   [xAxisLabel]="true"
+                                   [yAxisLabel]="true">
+          </ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            Reasons
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <ngx-charts-pie-grid
+                               [view]="[700,400]"
+                               [scheme]="colourValues"
+                               [results]="reasons">
+
+          </ngx-charts-pie-grid>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

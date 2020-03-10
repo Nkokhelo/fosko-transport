@@ -42,7 +42,6 @@ import { AddTransportComponent } from './admin/transports/add-transport/add-tran
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { TransportListComponent } from './admin/transports/transport-list/transport-list.component';
-import { TransportsComponent } from './admin/transport-reference/transports/transports.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {
   OwlDateTimeModule,
@@ -83,7 +82,6 @@ export const MY_MOMENT_FORMATS = {
     ListComponent,
     TransportListComponent,
     AddTransportComponent,
-    TransportsComponent,
     VehicleCardComponent
   ],
   imports: [

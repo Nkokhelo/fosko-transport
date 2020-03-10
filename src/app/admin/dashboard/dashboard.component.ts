@@ -10,21 +10,19 @@ import { Driver } from 'src/app/models/driver';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  view: any[] = [700, 340];
   // options
   showXAxis = true;
   showYAxis = true;
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Country';
   showYAxisLabel = true;
-  yAxisLabel = 'Population';
 
   drivers: any[];
   vehicles: any[];
   destinations: any[];
   departments: any[];
+  reasons: any[];
   colourValues = {
     domain: [
       '#4850bd',
@@ -45,25 +43,6 @@ export class DashboardComponent implements OnInit {
       '#D19F8E'
     ]
   };
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', cols: 1, rows: 1 },
-          { title: 'Card 3', cols: 1, rows: 1 },
-          { title: 'Card 4', cols: 1, rows: 1 }
-        ];
-      }
-
-      return [
-        { title: 'Card 1', cols: 2, rows: 1 },
-        { title: 'Card 2', cols: 1, rows: 1 },
-        { title: 'Card 3', cols: 1, rows: 2 },
-        { title: 'Card 4', cols: 1, rows: 1 }
-      ];
-    })
-  );
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -75,7 +54,9 @@ export class DashboardComponent implements OnInit {
     this.vehicles = await this.makeChartData('vehicles');
     this.destinations = await this.makeChartData('destinations');
     this.departments = await this.makeChartData('departments');
+    this.reasons = await this.makeChartData('reasons');
     const transportsList = await this.context.list<Transport>('transports');
+    console.log(this.vehicles);
   }
 
   groupBy(arr: any[], prop: string) {
@@ -87,7 +68,7 @@ export class DashboardComponent implements OnInit {
     }, {});
   }
   async makeChartData(path: string) {
-    const list = await this.context.list<Driver>('drivers');
+    const list = await this.context.list<Driver>(path);
     return list
       .filter(d => d.totalTransports > 0)
       .map(d => ({
