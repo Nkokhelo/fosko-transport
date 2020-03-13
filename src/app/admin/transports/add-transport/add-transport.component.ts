@@ -1,29 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Validators,
-  FormGroup,
-  FormControl,
-  AbstractControl,
-  ValidationErrors
-} from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Vehicle } from 'src/app/models/vehicle';
 import { Department } from 'src/app/models/department';
 import { Reason } from 'src/app/models/reason';
 import { Destination } from 'src/app/models/destination';
 import { Driver } from 'src/app/models/driver';
 import { DbcontextService } from 'src/app/services/dbcontext.service';
-import * as moment from 'moment';
-import { Moment } from 'moment';
+import * as moment from 'moment/moment';
+import { Moment } from 'moment/moment';
 import { Transport } from 'src/app/models/transports';
-import { toUnicode } from 'punycode';
 import { MatSnackBar } from '@angular/material';
-import { firestore } from 'firebase';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { TransportService } from 'src/app/services/transport.service';
-import { isObject } from 'util';
-import { MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
-import { emptyScheduled } from 'rxjs/internal/observable/empty';
-import { strictEqual } from 'assert';
 import { Router } from '@angular/router';
 
 @Component({

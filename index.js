@@ -13,24 +13,17 @@ function createWindow() {
     autoHideMenuBar: true,
   });
 
-  // win.loadURL(
-  //   url.format({
-  //     pathname: path.join(__dirname, `/dist/index.html`),
-  //     protocol: "file:",
-  //     slashes: true
-  //   })
-  // );
+  win.loadURL(`file://${__dirname}/dist/index.html`);
+  console.log(`Dir Name:${__dirname} \n filename: ${__filename}`);
 
-  win.loadURL("http://localhost:4200/")
-  win.webContents.openDevTools({
-    mode: "bottom"
-  });
-
+  // win.loadURL("http://localhost:4200/")
+  // win.webContents.openDevTools({
+  //   mode: "bottom"
+  // });
 
   win.on("closed", function () {
     win = null;
   });
-
 }
 
 app.whenReady().then(createWindow);

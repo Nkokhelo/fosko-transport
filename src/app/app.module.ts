@@ -57,6 +57,8 @@ import {
   MomentDateTimeAdapter
 } from 'ng-pick-datetime-moment';
 import { VehicleCardComponent } from './admin/graphs/vehicle-card/vehicle-card.component';
+import { AdminGuard } from './guards/admin.guard';
+import { TransportService } from './services/transport.service';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'l LT',
@@ -128,7 +130,9 @@ export const MY_MOMENT_FORMATS = {
     {
       provide: OWL_DATE_TIME_FORMATS,
       useValue: MY_MOMENT_FORMATS
-    }
+    },
+    AdminGuard,
+    TransportService
   ],
   bootstrap: [AppComponent],
   entryComponents: [AddDialogComponent, AddTransportComponent]
